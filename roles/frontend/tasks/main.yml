@@ -10,13 +10,16 @@
     state: started
     enabled: yes
 
-- name: Configure Nginx reverse proxy template
+- name: Copy Nginx configuration to sites-available
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: '0644'
   notify: Restart Nginx
 
-- name: Enable site configuration
+- name: Enable Nginx configuration by linking to sites-enabled
   file:
     src: /etc/nginx/sites-available/default
     dest: /etc/nginx/sites-enabled/default
