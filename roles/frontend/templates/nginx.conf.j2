@@ -1,0 +1,16 @@
+Nginx
+upstream backend_servers {
+    {% for host in groups['app'] %}
+    server {{ hostvars[host]['ansible_host'] }}:{{ app_port }};
+    {% endfor %}
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://backend_servers;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
