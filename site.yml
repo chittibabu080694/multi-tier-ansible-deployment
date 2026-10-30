@@ -1,0 +1,16 @@
+---
+- hosts: all
+  roles:
+    - common
+
+- hosts: db
+  roles:
+    - database
+
+- hosts: app
+  roles:
+    - backend
+
+- hosts: lb
+  roles:
+    - frontend
