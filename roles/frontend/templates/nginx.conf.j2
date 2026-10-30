@@ -1,6 +1,6 @@
 upstream backend_servers {
     {% for host in groups['app'] %}
-    server {{ hostvars[host]['ansible_host'] }}:{{ app_port }};
+    server {{ hostvars[host].ansible_host | default(host) }}:{{ app_port }};
     {% endfor %}
 }
 
